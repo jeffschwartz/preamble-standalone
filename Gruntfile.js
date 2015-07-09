@@ -23,6 +23,14 @@ module.exports = function ( grunt ) {
                 ]
             }
         },
+        shell: {
+            phantomjs: {
+                command: 'phantomjs lib/phantom-runner.js SpecRunner.html',
+                options: {
+                    stdout: true
+                }
+            }
+        },
         watch  : {
             less: {
                 files   : ['lib/*.less'],
@@ -45,8 +53,10 @@ module.exports = function ( grunt ) {
     grunt.loadNpmTasks( 'grunt-contrib-watch' );
     grunt.loadNpmTasks( 'grunt-contrib-less' );
     grunt.loadNpmTasks( 'grunt-contrib-compress' );
+    grunt.loadNpmTasks('grunt-shell');
 
     // Default task(s).
     grunt.registerTask( 'default', ['watch'] );
+    grunt.registerTask( 'phantomjs', ['shell'] );
 
 };
