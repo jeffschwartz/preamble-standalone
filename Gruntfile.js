@@ -3,6 +3,13 @@ module.exports = function ( grunt ) {
     // Project configuration.
     grunt.initConfig({
         pkg    : grunt.file.readJSON( 'package.json' ),
+        less   : {
+            production  : {
+                files : {
+                    'lib/preamble.css' : 'lib/preamble.less'
+                }
+            }
+        },
         compress: {
             main: {
                 options: {
@@ -11,14 +18,21 @@ module.exports = function ( grunt ) {
                 },
                 files: [
                     {
-                        src: ['lib/*', 'spec/*', 'src/**', 'SpecRunner.html']
+                        src: ['lib/*.js', 'lib/*.css', 'spec/*', 'src/**', 'SpecRunner.html']
                     }
                 ]
             }
         },
         watch  : {
+            less: {
+                files   : ['lib/*.less'],
+                tasks   : ['less'],
+                options : {
+                    interrupt : true
+                }
+            },
             compress : {
-                files   : ['lib/*', 'spec/*', 'src/*', 'SpecRunner.html'],
+                files   : ['lib/*.js', 'lib/*.css', 'spec/*', 'src/*', 'SpecRunner.html'],
                 tasks   : ['compress'],
                 options : {
                     interrupt : true
@@ -29,6 +43,7 @@ module.exports = function ( grunt ) {
 
     // Load the plugins
     grunt.loadNpmTasks( 'grunt-contrib-watch' );
+    grunt.loadNpmTasks( 'grunt-contrib-less' );
     grunt.loadNpmTasks( 'grunt-contrib-compress' );
 
     // Default task(s).
